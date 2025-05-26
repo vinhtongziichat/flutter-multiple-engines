@@ -1,0 +1,4 @@
+.DS_Store
+/app_ios/Pods
+/app_ios/Podfile.lock
+/app_ios/.DS_Store
