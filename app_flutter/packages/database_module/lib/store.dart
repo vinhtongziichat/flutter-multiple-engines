@@ -56,7 +56,7 @@ class StoreBox {
     }
   }
 
-  Future<List<dynamic>> getUserList() async {
+  Future<List<Person>> getUserList() async {
     final persons = personBox.getAll();
     return persons;
   }

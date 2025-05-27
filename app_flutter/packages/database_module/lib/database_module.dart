@@ -1,8 +1,6 @@
 // ignore_for_file: avoid_print
-
-import 'dart:convert';
-
 import 'package:core_module/core_module.dart';
+import 'package:database_module/person.dart';
 import 'store.dart';
 
 class DatabaseModule extends CoreModule {
@@ -19,7 +17,7 @@ class DatabaseModule extends CoreModule {
       switch (call.method) {
         case 'getUserList':
           final userList = await _objectBox?.getUserList() ?? [];
-          return jsonEncode(userList);
+          return Person.encode(userList);
 
         default:
           return null;

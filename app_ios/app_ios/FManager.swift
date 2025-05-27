@@ -23,10 +23,6 @@ class FViewController: FlutterViewController, FlutterStreamHandler {
         return nil
     }
     
-    deinit {
-        print("FViewController deinit")
-    }
-    
     func dispose() {
         servicesChannel.setMethodCallHandler(nil)
         streamInChannel.setMessageHandler(nil)

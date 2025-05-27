@@ -1,3 +1,5 @@
+import 'dart:convert';
+
 import 'package:objectbox/objectbox.dart';
 
 @Entity()
@@ -29,4 +31,14 @@ class Person {
       externalId: json['id'] as String,
     );
   }
+
+  Map<String, dynamic> toJson() => {
+    'id': externalId, // Ánh xạ externalId sang 'id' để khớp với fromJson
+    'name': name,
+    'language': language,
+    'bio': bio,
+    'version': version,
+  };
+
+  static String encode(List<Person> persons) => jsonEncode(persons.map((person) => person.toJson()).toList());
 }
