@@ -2,6 +2,8 @@
 import 'dart:async';
 import 'dart:convert';
 
+import 'package:app_flutter/socket_list.dart';
+import 'package:app_flutter/user_list.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 
@@ -12,17 +14,17 @@ class MyApp extends StatelessWidget {
   @override
   Widget build(BuildContext context) {
     return MaterialApp(
-      title: 'Flutter Demo',
       theme: ThemeData(
         primarySwatch: Colors.blue,
       ),
-      home: MyHomePage(title: 'Flutter Demo Home Page'),
+      home: MyHomePage(title: "Flutter"),
     );
   }
 }
 
 class MyHomePage extends StatefulWidget {
   MyHomePage({super.key, required this.title});
+
   final String title;
   final MethodChannel _appChannel = MethodChannel('com.ziichat/app/services');
   final EventChannel _streamOutChannel = EventChannel('com.ziichat/app/stream/out');
@@ -40,12 +42,12 @@ class _MyHomePageState extends State<MyHomePage> {
   String _apiExecutionTime = '';
   String _userListExecutionTime = '';
   late StreamSubscription _subscription;
+  late Stream<dynamic> _streamOut;
   
   @override
   void initState() {
     super.initState();
     _subscribeToStream();
-    // _execute();
   }
 
   @override
@@ -55,7 +57,8 @@ class _MyHomePageState extends State<MyHomePage> {
   }
 
   void _subscribeToStream() {
-    _subscription = widget._streamOutChannel.receiveBroadcastStream().listen(
+    _streamOut = widget._streamOutChannel.receiveBroadcastStream();
+    _subscription = _streamOut.listen(
       (dynamic event) {
         if (event == null) return;
         try {
@@ -137,7 +140,30 @@ class _MyHomePageState extends State<MyHomePage> {
   @override
   Widget build(BuildContext context) {
     return Scaffold(
-      appBar: AppBar(),
+      appBar: AppBar(
+        title: Text(widget.title),
+        elevation: 4.0,
+        actions: [
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => PersonListScreen()),
+              );
+            },
+            child: Text('User List'),
+          ),
+          TextButton(
+            onPressed: () {
+              Navigator.push(
+                context,
+                MaterialPageRoute(builder: (context) => SocketListScreen(streamOut: _streamOut,)),
+              );
+            },
+            child: Text('Socket'),
+          ),
+        ],
+      ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.start,
@@ -152,15 +178,6 @@ class _MyHomePageState extends State<MyHomePage> {
             Text(_streamMessage),
             SizedBox(height: 50,),
             Text(
-              'Fetch from API: $_apiExecutionTime',
-              style: TextStyle(
-                fontWeight: FontWeight.bold,
-                fontSize: 20,
-              ),
-            ),
-            Text(_apiString),
-            SizedBox(height: 50,),
-            Text(
               'Fetch from DATABASE: $_userListExecutionTime',
               style: TextStyle(
                 fontWeight: FontWeight.bold,
@@ -168,11 +185,22 @@ class _MyHomePageState extends State<MyHomePage> {
               ),
             ),
             Text(_listString),
+            SizedBox(height: 50,),
+            Text(
+              'Fetch from API: $_apiExecutionTime',
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+                fontSize: 20,
+              ),
+            ),
+            Text(_apiString),
           ],
         ),
       ),
       floatingActionButton: FloatingActionButton(
-        onPressed: _execute,
+        onPressed:() {
+          _execute();
+        },
         tooltip: 'Fetch',
         child: const Text("Fetch"),
       ), // This trailing comma makes auto-formatting nicer for build methods.

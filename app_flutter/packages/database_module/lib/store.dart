@@ -34,25 +34,35 @@ class StoreBox {
     if (personBox.isEmpty()) {
       try {
         final jsonString = await rootBundle.loadString('packages/database_module/assets/5MB.json');
-        final List<dynamic> jsonData = jsonDecode(jsonString);
-        final persons = jsonData.map((json) => Person.fromJson(json)).toList();
-        personBox.putMany(persons);
-        print('Initialized ObjectBox with ${persons.length} persons from JSON');
+        final length = await insertData(jsonString);
+        print('Initialized ObjectBox with ${length} persons from JSON');
       } catch (e) {
         print('Error initializing ObjectBox with data: $e');
       }
     }
   }
 
-  Future<void> importTasksFromJson() async {
+  Future<int> insertData(String jsonString) async {
     try {
-      final jsonString = await rootBundle.loadString('assets/5MB.json');
       final List<dynamic> jsonData = jsonDecode(jsonString);
       final persons = jsonData.map((json) => Person.fromJson(json)).toList();
       personBox.putMany(persons);
       print('Tasks imported successfully: ${persons.length} persons added.');
+      return persons.length;
     } catch (e) {
       print('Error importing tasks: $e');
+      return 0;
+    }
+  }
+
+  Future<bool> deleteAll() async {
+    try {
+      personBox.removeAll();
+      print('All persons deleted successfully');
+      return true;
+    } catch (e) {
+      print('Error deleting persons: $e');
+      return false;
     }
   }
 

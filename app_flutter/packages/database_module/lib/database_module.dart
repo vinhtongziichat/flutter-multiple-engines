@@ -19,6 +19,12 @@ class DatabaseModule extends CoreModule {
           final userList = await _objectBox?.getUserList() ?? [];
           return Person.encode(userList);
 
+        case 'addPersons':
+          return await _objectBox?.insertData(call.arguments as String);
+
+        case 'deletePersons':
+          return await _objectBox?.deleteAll();
+
         default:
           return null;
       }

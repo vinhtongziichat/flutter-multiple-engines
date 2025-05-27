@@ -21,7 +21,9 @@ async def broadcast_random_message():
             if count > 1000000:
                 count = 0
             current_time = datetime.now().strftime("%H:%M:%S")
-            message_json = json.dumps({"data": jsonData, "content": f"{current_time} => {count}"})
+            shuffled_json = jsonData[:]
+            random.shuffle(shuffled_json)
+            message_json = json.dumps({"data": shuffled_json, "content": f"{current_time} => {count}"})
             tasks = [client.send(message_json) for client in CLIENTS]
             if tasks:
                 await asyncio.gather(*tasks, return_exceptions=True)
