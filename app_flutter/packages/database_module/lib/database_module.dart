@@ -1,5 +1,7 @@
 // ignore_for_file: avoid_print
 
+import 'dart:convert';
+
 import 'package:core_module/core_module.dart';
 import 'store.dart';
 
@@ -8,16 +10,16 @@ class DatabaseModule extends CoreModule {
   static final DatabaseModule _instance = DatabaseModule._internal();
   DatabaseModule._internal();
   static DatabaseModule get instance => _instance;
-  // StoreBox? _objectBox;
+  StoreBox? _objectBox;
 
   @override
   void init() async {
-    // _objectBox = await StoreBox.create();
+    _objectBox = await StoreBox.create();
     Channel.instance.addMethodCallHandler((call) async {
       switch (call.method) {
         case 'getUserList':
-          // return await _objectBox?.getUserList() ?? [];
-          return [];
+          final userList = await _objectBox?.getUserList() ?? [];
+          return jsonEncode(userList);
 
         default:
           return null;
@@ -27,7 +29,7 @@ class DatabaseModule extends CoreModule {
 
   @override
   void dispose() {
-    // _objectBox?.dispose();
+    _objectBox?.dispose();
   }
 }
 

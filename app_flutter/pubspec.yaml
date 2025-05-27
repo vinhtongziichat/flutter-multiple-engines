@@ -36,6 +36,9 @@ dependencies:
     path: ./packages/core_module
   websocket_module:
     path: ./packages/websocket_module
+  path_provider: ^2.1.5
+  objectbox_flutter_libs: any
+  objectbox: ^4.2.0
 
 dev_dependencies:
   flutter_test:

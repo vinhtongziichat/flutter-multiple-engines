@@ -75,14 +75,19 @@ class _MyHomePageState extends State<MyHomePage> {
     try {
       final list = await widget._appChannel.invokeMethod('getUserList');
       setState(() {
-        _listString = jsonEncode(list);
+        _listString = jsonDecode(list);
       });
+    } on PlatformException catch (e) {
+      print('🍎 Failed to getUserList: ${e.message}');
+    }
+
+    try {
       final data = await widget._appChannel.invokeMethod('fetchData');
       setState(() {
         _apiString = jsonEncode(data);
       });
     } on PlatformException catch (e) {
-      print('Failed to fetch data: ${e.message}');
+      print('🍎 Failed to fetch Data: ${e.message}');
     }
   }
 

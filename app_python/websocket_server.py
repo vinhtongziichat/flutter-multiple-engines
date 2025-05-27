@@ -56,7 +56,7 @@ async def main():
     broadcast_task = asyncio.create_task(broadcast_random_message())
     
     # Start the WebSocket server
-    server = await websockets.serve(handle_client, "localhost", 8765)
+    server = await websockets.serve(handle_client, "0.0.0.0", 8765)
     
     # Keep the server running
     await server.wait_closed()

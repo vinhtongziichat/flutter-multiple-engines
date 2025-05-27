@@ -8,6 +8,7 @@ class Person {
   String language;
   String bio;
   double version;
+  String externalId;
 
   Person({
     this.id = 0,
@@ -15,15 +16,17 @@ class Person {
     required this.language,
     required this.bio,
     required this.version,
+    required this.externalId,
   });
 
   factory Person.fromJson(Map<String, dynamic> json) {
     return Person(
-      id: json['id'] as int? ?? 0,
+      id: 0,
       name: json['name'] as String,
       language: json['language'] as String,
       bio: json['bio'] as String,
       version: (json['version'] as num).toDouble(),
+      externalId: json['id'] as String,
     );
   }
 }

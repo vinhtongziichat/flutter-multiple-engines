@@ -22,7 +22,7 @@ final _entities = <obx_int.ModelEntity>[
   obx_int.ModelEntity(
     id: const obx_int.IdUid(1, 2204594029205695103),
     name: 'Person',
-    lastPropertyId: const obx_int.IdUid(5, 8155862577172088057),
+    lastPropertyId: const obx_int.IdUid(6, 409526471029616958),
     flags: 0,
     properties: <obx_int.ModelProperty>[
       obx_int.ModelProperty(
@@ -53,6 +53,12 @@ final _entities = <obx_int.ModelEntity>[
         id: const obx_int.IdUid(5, 8155862577172088057),
         name: 'version',
         type: 8,
+        flags: 0,
+      ),
+      obx_int.ModelProperty(
+        id: const obx_int.IdUid(6, 409526471029616958),
+        name: 'externalId',
+        type: 9,
         flags: 0,
       ),
     ],
@@ -100,11 +106,11 @@ obx_int.ModelDefinition getObjectBoxModel() {
   final model = obx_int.ModelInfo(
     entities: _entities,
     lastEntityId: const obx_int.IdUid(1, 2204594029205695103),
-    lastIndexId: const obx_int.IdUid(0, 0),
+    lastIndexId: const obx_int.IdUid(1, 8876483028246607891),
     lastRelationId: const obx_int.IdUid(0, 0),
     lastSequenceId: const obx_int.IdUid(0, 0),
     retiredEntityUids: const [],
-    retiredIndexUids: const [],
+    retiredIndexUids: const [8876483028246607891],
     retiredPropertyUids: const [],
     retiredRelationUids: const [],
     modelVersion: 5,
@@ -125,12 +131,14 @@ obx_int.ModelDefinition getObjectBoxModel() {
         final nameOffset = fbb.writeString(object.name);
         final languageOffset = fbb.writeString(object.language);
         final bioOffset = fbb.writeString(object.bio);
-        fbb.startTable(6);
+        final externalIdOffset = fbb.writeString(object.externalId);
+        fbb.startTable(7);
         fbb.addInt64(0, object.id);
         fbb.addOffset(1, nameOffset);
         fbb.addOffset(2, languageOffset);
         fbb.addOffset(3, bioOffset);
         fbb.addFloat64(4, object.version);
+        fbb.addOffset(5, externalIdOffset);
         fbb.finish(fbb.endTable());
         return object.id;
       },
@@ -158,12 +166,16 @@ obx_int.ModelDefinition getObjectBoxModel() {
           12,
           0,
         );
+        final externalIdParam = const fb.StringReader(
+          asciiOptimization: true,
+        ).vTableGet(buffer, rootOffset, 14, '');
         final object = Person(
           id: idParam,
           name: nameParam,
           language: languageParam,
           bio: bioParam,
           version: versionParam,
+          externalId: externalIdParam,
         );
 
         return object;
@@ -199,5 +211,10 @@ class Person_ {
   /// See [Person.version].
   static final version = obx.QueryDoubleProperty<Person>(
     _entities[0].properties[4],
+  );
+
+  /// See [Person.externalId].
+  static final externalId = obx.QueryStringProperty<Person>(
+    _entities[0].properties[5],
   );
 }

@@ -193,7 +193,7 @@ packages:
     source: hosted
     version: "1.16.0"
   objectbox:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: objectbox
       sha256: a07f93ea6b6a7c6cfe2efce743e12842ccd876d92dc6b6da532cc5221c507ef0
@@ -201,7 +201,7 @@ packages:
     source: hosted
     version: "4.2.0"
   objectbox_flutter_libs:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: objectbox_flutter_libs
       sha256: "43b2b86b61aa4a6ef9e3b44d3cc09471586975d100c6620ef22960e490c9bcd5"
@@ -217,7 +217,7 @@ packages:
     source: hosted
     version: "1.9.1"
   path_provider:
-    dependency: transitive
+    dependency: "direct main"
     description:
       name: path_provider
       sha256: "50c5dd5b6e1aaf6fb3a78b33f6aa3afca52bf903a8a5298f53101fdaee55bbcd"

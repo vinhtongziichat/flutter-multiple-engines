@@ -5,7 +5,7 @@
   "entities": [
     {
       "id": "1:2204594029205695103",
-      "lastPropertyId": "5:8155862577172088057",
+      "lastPropertyId": "6:409526471029616958",
       "name": "Person",
       "properties": [
         {
@@ -33,19 +33,26 @@
           "id": "5:8155862577172088057",
           "name": "version",
           "type": 8
+        },
+        {
+          "id": "6:409526471029616958",
+          "name": "externalId",
+          "type": 9
         }
       ],
       "relations": []
     }
   ],
   "lastEntityId": "1:2204594029205695103",
-  "lastIndexId": "0:0",
+  "lastIndexId": "1:8876483028246607891",
   "lastRelationId": "0:0",
   "lastSequenceId": "0:0",
   "modelVersion": 5,
   "modelVersionParserMinimum": 5,
   "retiredEntityUids": [],
-  "retiredIndexUids": [],
+  "retiredIndexUids": [
+    8876483028246607891
+  ],
   "retiredPropertyUids": [],
   "retiredRelationUids": [],
   "version": 1
